@@ -126,11 +126,11 @@ public final class GoogleAuthenticatorQRGenerator {
      */
     public static String getOtpAuthURL(String issuer,
                                        String accountName,
-                                       GoogleAuthenticatorKey credentials) {
+                                       String key) {
 
         return String.format(
                 TOTP_URI_FORMAT,
-                internalURLEncode(getOtpAuthTotpURL(issuer, accountName, credentials)));
+                internalURLEncode(getOtpAuthTotpURL(issuer, accountName, key)));
     }
 
     /**
@@ -153,13 +153,13 @@ public final class GoogleAuthenticatorQRGenerator {
      */
     public static String getOtpAuthTotpURL(String issuer,
                                            String accountName,
-                                           GoogleAuthenticatorKey credentials) {
+                                           String key) {
         
         URIBuilder uri = new URIBuilder()
             .setScheme("otpauth")
             .setHost("totp")
             .setPath("/" + formatLabel(issuer, accountName))
-            .setParameter("secret", credentials.getKey());
+            .setParameter("secret", key);
 
 
         if (issuer != null) {
